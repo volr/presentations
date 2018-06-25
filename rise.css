@@ -1,0 +1,22 @@
+/* TODO: maybe we need to port this to main.css?  */
+@font-face {
+    font-family: 'NanumGothic', sans-serif;
+    src: url('fonts/NanumGothic-Regular.ttf');
+}
+.present h1, .present h2, .present h3, .present h4, .present h5, .present h6 {
+    font-family: 'NanumGothic' !important;
+}
+
+.backgrounds {
+    background: url(nat_farve.png) no-repeat 20px -30px;
+    background-size: 54% 250px;
+}
+.slide-background.present {
+    background: url(diku.png) no-repeat 50px 70px;
+    background-size: 500px 110px;
+    transition: none;
+}
+
+.reveal img {
+    max-width: 60%;
+}
