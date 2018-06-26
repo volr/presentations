@@ -3,16 +3,20 @@
     font-family: 'NanumGothic', sans-serif;
     src: url('fonts/NanumGothic-Regular.ttf');
 }
+
+.container .present {
+ padding-top: 140px !important;
+}
 .present h1, .present h2, .present h3, .present h4, .present h5, .present h6 {
     font-family: 'NanumGothic' !important;
 }
 
 .backgrounds {
-    background: url(nat_farve.png) no-repeat 20px -30px;
+    background: url(nat_farve.png) no-repeat 20px -40px;
     background-size: 54% 250px;
 }
 .slide-background.present {
-    background: url(diku.png) no-repeat 50px 70px;
+    background: url(diku.png) no-repeat 50px 60px;
     background-size: 500px 110px;
     transition: none;
 }
