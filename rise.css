@@ -5,18 +5,20 @@
 }
 
 .container .present {
+ margin-bottom: -140px !important;
  padding-top: 140px !important;
 }
+
 .present h1, .present h2, .present h3, .present h4, .present h5, .present h6 {
     font-family: 'NanumGothic' !important;
 }
 
 .backgrounds {
-    background: url(nat_farve.png) no-repeat 20px -40px;
+    background: url(nat_farve.png) no-repeat 20px 20px;
     background-size: 54% 250px;
 }
 .slide-background.present {
-    background: url(diku.png) no-repeat 50px 60px;
+    background: url(diku.png) no-repeat 60px 60px;
     background-size: 500px 110px;
     transition: none;
 }
