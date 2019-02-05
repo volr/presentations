@@ -1,0 +1,387 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% a0poster Portrait Poster 
+% LaTeX Template
+% with University Copenhagen logo
+% Version 1.0 (22/06/13)
+%
+% Based on:
+% The a0poster class was created by:
+% Gerlinde Kettl and Matthias Weiser (tex@kettl.de)
+% 
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[a0,portrait]{a0poster}
+\usepackage[utf8]{inputenc}
+\usepackage{multicol} % This is so we can have multiple columns of text side-by-side
+\columnsep=100pt % This is the amount of white space between the columns in the poster
+\columnseprule=3pt % This is the thickness of the black line between the columns in the poster
+
+\usepackage[svgnames]{xcolor} % Specify colors by their 'svgnames', for a full list of all colors available see here: http://www.latextemplates.com/svgnames-colors
+
+%\usepackage{times} % Use the times font
+\usepackage{palatino} % Uncomment to use the Palatino font
+
+\usepackage{url}
+\usepackage{fancyvrb}
+\usepackage{enumitem}
+
+\usepackage{graphicx} % Required for including images
+\graphicspath{{figures/}} % Location of the graphics files
+\usepackage{booktabs} % Top and bottom rules for table
+\usepackage[font=small,labelfont=bf]{caption} % Required for specifying captions to tables and figures
+\usepackage{amsfonts, amsmath, amsthm, amssymb} % For math fonts, symbols and environments
+\usepackage{wrapfig} % Allows wrapping text around tables and figures
+\definecolor{ku}{RGB}{144,26,30}
+\definecolor{ku-yellow}{RGB}{255,249,25}
+\definecolor{grey}{RGB}{100, 100, 100}
+\definecolor{darkgreen}{RGB}{0, 0.2, 0.13}
+
+ \usepackage{eso-pic}
+               \newcommand\BackgroundIm{
+               \put(66,-41){
+               \parbox[b][\paperheight]{\paperwidth}{%
+               \vfill
+               \centering
+               \includegraphics[height=\paperheight,width=\paperwidth,
+               keepaspectratio]{background.pdf}%
+               \vfill
+               }}}
+
+\usepackage[top=2in, bottom=0in, left=2in, right=0.2in]{geometry}
+\usepackage{titlesec}
+\titlespacing*{\section}{0cm}{1cm}{0.5cm}
+\setlength{\parindent}{1cm}
+
+\begin{document}
+ \AddToShipoutPicture*{\BackgroundIm}
+%----------------------------------------------------------------------------------------
+%	POSTER HEADER 
+%----------------------------------------------------------------------------------------
+
+% The header is divided into two boxes:
+% The first is 75% wide and houses the title, subtitle, names, university/organization and contact information
+% The second is 25% wide and houses a logo for your university/organization or a photo of you
+% The widths of these boxes can be easily edited to accommodate your content as you see fit
+
+\begin{minipage}[t]{0.78\linewidth}
+\vspace{10cm}
+\Huge \color{ku} \textbf{Volr: A declarative interface language for neural computation} \color{Black}\\[-1.8cm] % Title
+\huge\textit{Experimental neural systems modeling with Jupyter Notebooks}\\[1cm] % Subtitle
+\begin{tabular}{l@{\hspace{1in}}l}
+\Large \textbf{Christian Pehle} & \Large \textbf{Jens Egholm Pedersen} \\ % Author(s)
+\Large Kirchoff-Institute for Physics & \Large Department of Computer Science \\ % University/organization
+\Large University of Heidelberg & \Large University of Copenhagen
+\end{tabular}
+
+\end{minipage}
+%
+\begin{minipage}[t]{0.22\linewidth}
+\vspace{13.5cm}
+\flushright
+\color{DarkSlateGray}
+\Large \textbf{Contact Information:}\\
+Universitetsparken 5 \\
+2100 København Ø\\[1cm]
++45 25122752\\ % Phone number
+\texttt{xtp778@alumni.ku.dk}% Email address
+\end{minipage}
+
+\vspace{0.5cm} % A bit of extra whitespace between the header and poster content
+
+%----------------------------------------------------------------------------------------
+
+\begin{multicols}{2} % This is how many columns your poster will be broken into, a portrait poster is generally split into 2 columns
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\color{ku} % Navy color for the abstract
+
+\begin{abstract}
+\normalsize
+\noindent For inexperienced users, there are significant barriers to entry to
+the computational platforms and tools developed by the Human Brain Project
+(HBP).
+Despite the efforts done to adopt common abstractions and interface libraries like PyNN, it is
+time-consuming and complicated to construct and simulate spiking neural
+networks.
+Even more so if the experiment involves learning.
+This poster addresses the growing need for consistent and reproducible semantics within
+simulated and accelerated neural experiments.
+We present an intermediate compiler, that bridges the inconsistencies of the
+execution environments by offering a stable abstraction, along with a machine
+learning library for spiking neural networks.
+The library and compiler currently supports NEST, BrainScaleS as well as regular artificial neural
+network models.
+
+The work presented here carries the potential to significantly reduce experiment iteration
+times and drastically cut costs, to the benefit of the research community
+as a whole.
+Future plans are to develop a strongly typed calculus for network connectivity
+and plasticity, paving the way for high level abstractions for learning,
+including the learning-to-learn paradigm.
+Additionally, we aim to support SpiNNaker and the second generation
+BrainScaleS hardware platform.
+\end{abstract}
+
+
+\begin{center}\vspace{0.3cm}
+\includegraphics[width=0.9\linewidth]{figures/volr_model.png}
+\captionof{figure}{The workflow of an experiment, from the modeling in a 
+		   Jupyter notebook, through the evaluation and training on one or more platforms,
+                   to the retrieval of experiment results  
+                   for subsequent analysis. From the perspective of the user
+                   everything happens directly in the notebook.}
+\label{fig:model}
+\end{center}
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+\color{SaddleBrown} % SaddleBrown color for the introduction
+\section*{Introduction}
+Despite the pioneering work of simulator APIs for neural experiments,
+inexperienced users are faced with considerable obstacles when experimenting
+with the HBP-related computational platforms.
+Running experiments includes learning an interface language like 
+PyNN, working with simulation-dependent peculiarities, digitising analog experiments
+and performing complicated pre- and post-processing of large amounts of data.
+
+A compiler built on a strongly-typed network abstractions has been built to
+unify the heterogeneous execution environments towards the user. 
+To interface the compiler, a domain-specific language (DSL) has been developed, 
+that provides stable and testable semantics.
+The generated networks are trained in a Tensorflow-like learning framework.
+Because of the support for multiple backends, model parameters can be copied
+into other models, allowing non-plastic platforms like BrainScaleS to indirectly
+benefit from the training.
+Finally, a Jupyter Notebook environment is provided to hide the irrelevant
+compiler details for the user, while simplifying the compilation and execution of
+experiments.
+The project accelerates the workflow when simulating neural networks, thereby
+increasing the research output and widening the audience for neural simulators. 
+
+The prototype is designed to facilitate the entire life cycle of an experiment: 
+generation/preprocessing of data, neural network topology and properties, experimental setup 
+and finally data extraction and post-processing (see Figure \ref{fig:model}).\\[0.4cm]
+\indent Documentation is available at: \hspace{0.5cm} \textbf{\texttt{https://volr.readthedocs.io}}
+
+% 
+%----------------------------------------------------------------------------------------
+%	OBJECTIVES
+%----------------------------------------------------------------------------------------
+
+\color{DarkSlateGray} % DarkSlateGray color for the rest of the content
+
+\section*{1. Execution targets}
+The current prototype supports three simulation targets: NEST (through the NEST API), 
+BrainScaleS for spiking neural networks (SNN) (through PyNN) and artificial neural networks 
+(ANN) with GPU acceleration (through Futhark \cite{Henriksen2017}).
+
+The DSL maintains an intermediate representation of the experiments, including all the 
+necessary details to reproduce the setup.
+The intermediate representation simplifies the integration with execution targets,
+currently by through the efforts of Futhark, PyNN and the NEST API (see Figure
+\ref{fig:pipeline}).
+However other targets would be interesting to examine, such as SpiNNaker, TensorFlow, Intel's 
+Loihi chip and the next generation BrainScaleS 2 system from Heidelberg.
+
+\begin{center}
+\vspace{-0.3cm}
+\begin{multicols}{2}
+\renewcommand{\theFancyVerbLine}{\small \arabic{FancyVerbLine}}
+\centering
+a) Compile and train a model
+\begin{Verbatim}[numbers=left,xleftmargin=5mm,commandchars=\\\{\}]
+\color{grey}# Compile the code
+\textbf{\color{ku}dsl}\color{black} = '\color{grey}Net 2 4\color{black}'
+\textbf{\color{ku}model}\color{black} = Volr.compile(dsl)
+\color{grey}# Train the model
+\textbf{results} = model.train(x, y)
+
+\end{Verbatim}
+
+b) Inject trained weights
+\begin{Verbatim}[numbers=left,xleftmargin=5mm,commandchars=\\\{\}]
+\color{grey}# Extract model weights\color{black}
+\textbf{params} = \textbf{\color{ku}model}\color{black}.parameters
+\color{grey}# Inject into new model\color{black}
+\textbf{\color{ku}fitted_model}\color{black} = 
+  Volr.compile(\textbf{\color{ku}dsl}\color{black}, params)
+\end{Verbatim}
+\end{multicols}
+\vspace{-0.4cm}
+\captionof{figure}{Examples for a) constructing and training a Volr model
+                   and b) extracting model parameters and injecting them into a
+		 new, fitted model.}
+\label{fig:experiment}
+\end{center}
+\vspace{0.1cm}
+
+\section*{2. Fast experiment feedback loop with Jupyter Notebooks}
+Jupyter Notebooks are increasingly popular in data processing and data analysis domains.
+Exploiting this paradigm lets researchers quickly map hypotheses to experiments,
+with the support of the vast Python ecosystem.
+
+After installing the environment it takes less than a minute to setup an experiment and
+extract the first results. 
+Figure \ref{fig:experiment} illustrates how a model can be built and trained.
+By building on open technologies like Python and Jupyter Notebooks, the experiments are
+straight-forward to share and expand upon.
+
+\section*{3. A framework for learning}
+A machine learning library has been developed to train the networks in NEST and
+Futhark.
+Because of the platform-independent topologies, trained parameters can be
+transferred from one model to another (see Figure \ref{fig:experiment}.
+
+At the core of project is the domain-specific language (DSL) Volr, that models neural
+network topology as well as simulator-specific properties. 
+The inner representational structure allows for abstract analyses, by understanding networks
+as first-class citizens subject to function composition and lambda calculus.
+These \textit{algebraic} properties could pave the way for the application of techniques
+such as reverse differentiation, dependent types and semantic error checking.
+
+\begin{center}\vspace{1.3cm}
+\includegraphics[width=0.9\linewidth]{volr_pipeline}
+\captionof{figure}{The translation from the DSL to the execution targets. ANN models are
+                   interpreted by Futhark which in turn is evaluated on GPU/CPUs.
+                   SNN models are interpreted by the internal Myelin compiler that checks
+                   for inconsistencies and generates target-specific code through PyNN and
+                   the NEST API.}
+\label{fig:pipeline}
+\end{center}
+
+\section*{4. Future work}
+Ongoing work is exploring the domain of more complex cognitive experiments with cognitive
+tasks modeling, reverse differentiation for ANN and
+the inclusion of high-level abstractions for learning through learning-to-learn integration between ANN and SNN. In
+this context it would be interesting to incorporate the methods of [2][5] into a generalizable non-experiment specific
+framework.
+
+The algebraic properties of the internal model also deserves to be explored. Techniques
+such as automatic differentiation could permit the fast generation of large and complex
+SNNs \cite{Baydin2018}.
+
+%----------------------------------------------------------------------------------------
+%	CONCLUSIONS
+%----------------------------------------------------------------------------------------
+
+\color{SaddleBrown} % SaddleBrown color for the conclusions to make them stand out
+
+\section*{Conclusions}
+
+\begin{enumerate}
+\item Prototypical integration with Jupyter Notebooks has been shown to allow fast iterations of experiments, with immediate access to already familiar Python tools for large-scale data analysis.
+\item The formalised domain-specific language, Volr, has been developed to describe reproducible and consistent neural network experiments for artificial and spiking substrates.
+\item Three targets are currently supported: NEST, BrainScales and artificial neural networks through Futhark. Further work is needed to expand existing targets and include platforms such as Intel's Loihi, SpiNNaker and the new DLS chip from Heidelberg, Germany.
+\item Ongoing work is improve and exploring the domain of more complex cognitive
+  experiments, including \textit{learning-to-learn}, cognitive 
+tasks modeling and reverse differentiation for ANN.
+\end{enumerate}
+
+\color{DarkSlateGray} % Set the color back to DarkSlateGray for the rest of the content
+
+ %----------------------------------------------------------------------------------------
+%	REFERENCES
+%----------------------------------------------------------------------------------------
+
+\nocite{*} % Print all references regardless of whether they were cited in the poster or not
+\bibliographystyle{plain} % Plain referencing style
+\bibliography{sample} % Use the example bibliography file sample.bib
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+\section*{Acknowledgements}
+We are grateful for the valuable time and counsel of Sebastian Schmitt and Karlheinz Meier 
+from the Kirchoff-Institute for Physics at the University of Heidelberg, Germany.
+
+We would like to thank Jesper Mogensen and Nicolai Daugaard from the Unit for Cognitive 
+Neuroscience and Martin Elsman from the Department of Computer Science at the University of 
+Copenhagen for their interest and important contributions.
+
+%----------------------------------------------------------------------------------------
+
+\end{multicols}
+\end{document}
+
+
+%\subsection*{Mathematical Section}
+%Nulla vel nisl sed mauris auctor mollis non sed. 
+
+%\begin{equation}
+%E = mc^{2}
+%\label{eqn:Einstein}
+%\end{equation}
+
+% Curabitur mi sem, pulvinar quis aliquam rutrum. (1) edf (2)
+% , $\Omega=[-1,1]^3$, maecenas leo est, ornare at. $z=-1$ edf $z=1$ sed interdum felis dapinbus sem. $x$ set $y$ ytruem. 
+% Turpis $j$ amet accumsan enim $y$-lacina; 
+% ref $k$-viverra nec porttitor $x$-lacina. 
+
+% Vestibulum ac diam a odio tempus congue. Vivamus id enim nisi:
+
+% \begin{eqnarray}
+% \cos\bar{\phi}_k Q_{j,k+1,t} + Q_{j,k+1,x}+\frac{\sin^2\bar{\phi}_k}{T\cos\bar{\phi}_k} Q_{j,k+1} &=&\nonumber\\ 
+% -\cos\phi_k Q_{j,k,t} + Q_{j,k,x}-\frac{\sin^2\phi_k}{T\cos\phi_k} Q_{j,k}\label{edgek}
+% \end{eqnarray}
+% and
+% \begin{eqnarray}
+% \cos\bar{\phi}_j Q_{j+1,k,t} + Q_{j+1,k,y}+\frac{\sin^2\bar{\phi}_j}{T\cos\bar{\phi}_j} Q_{j+1,k}&=&\nonumber \\
+% -\cos\phi_j Q_{j,k,t} + Q_{j,k,y}-\frac{\sin^2\phi_j}{T\cos\phi_j} Q_{j,k}.\label{edgej}
+% \end{eqnarray} 
+
+% Nulla sed arcu arcu. Duis et ante gravida orci venenatis tincidunt. Fusce vitae lacinia metus. Pellentesque habitant morbi. $\mathbf{A}\underline{\xi}=\underline{\beta}$ Vim $\underline{\xi}$ enum nidi $3(P+2)^{2}$ lacina. Id feugain $\mathbf{A}$ nun quis; magno.
+
+% %----------------------------------------------------------------------------------------
+% %	RESULTS 
+% %----------------------------------------------------------------------------------------
+
+% \section*{Results}
+
+% Donec faucibus purus at tortor egestas eu fermentum dolor facilisis. Maecenas tempor dui eu neque fringilla rutrum. Mauris \emph{lobortis} nisl accumsan. Aenean vitae risus ante.
+% %
+% \begin{wraptable}{l}{12cm} % Left or right alignment is specified in the first bracket, the width of the table is in the second
+% \begin{tabular}{l l l}
+% \toprule
+% \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+% \midrule
+% Treatment 1 & 0.0003262 & 0.562 \\
+% Treatment 2 & 0.0015671 & 0.910 \\
+% Treatment 3 & 0.0009271 & 0.296 \\
+% \bottomrule
+% \end{tabular}
+% \captionof{table}{\color{Green} Table caption}
+% \end{wraptable}
+% %
+% Phasellus imperdiet, tortor vitae congue bibendum, felis enim sagittis lorem, et volutpat ante orci sagittis mi. Morbi rutrum laoreet semper. Morbi accumsan enim nec tortor consectetur non commodo nisi sollicitudin. Proin sollicitudin. Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh.
+
+% Nulla ut porttitor enim. Suspendisse venenatis dui eget eros gravida tempor. Mauris feugiat elit et augue placerat ultrices. Morbi accumsan enim nec tortor consectetur non commodo. Pellentesque condimentum dui. Etiam sagittis purus non tellus tempor volutpat. Donec et dui non massa tristique adipiscing. Quisque vestibulum eros eu. Phasellus imperdiet, tortor vitae congue bibendum, felis enim sagittis lorem, et 
+
+% In hac habitasse platea dictumst. Etiam placerat, risus ac.
+
+% Adipiscing lectus in magna blandit:
+
+% \begin{center}\vspace{1cm}
+% \begin{tabular}{l l l l}
+% \toprule
+% \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2} \\
+% \midrule
+% Treatment 1 & 0.0003262 & 0.562 \\
+% Treatment 2 & 0.0015681 & 0.910 \\
+% Treatment 3 & 0.0009271 & 0.296 \\
+% \bottomrule
+% \end{tabular}
+% \captionof{table}{\color{Green} Table caption}
+% \end{center}\vspace{1cm}
+
+% Vivamus sed nibh ac metus tristique tristique a vitae ante. Sed lobortis mi ut arcu fringilla et adipiscing ligula rutrum. Aenean turpis velit, placerat eget tincidunt nec, ornare in nisl. In placerat.
